@@ -1,0 +1,43 @@
+
+info user;
+hora = zoho.currenttime;
+saudacao = {};
+response = Map();
+username = user.get("first_name");
+if(hora.getHour() >= 0 && hora.getHour() <= 5)
+{
+	saudacao = " Boa madrugada";
+}
+else if(hora.getHour() >= 6 && hora.getHour() <= 12)
+{
+	saudacao = " Bom dia";
+}
+else if(hora.getHour() >= 12 && hora.getHour() < 18)
+{
+	saudacao = " Boa tarde";
+}
+else if(hora.getHour() >= 18 && hora.getHour() <= 23)
+{
+	saudacao = " Boa noite";
+}
+if(operation.contains("message_sent"))
+{
+	text = data.get("message").get("text");
+	if(text.containsIgnoreCase('saudacao'))
+	{
+		response.put("text","Olá, " + username + saudacao + "!");
+	}
+	if(text.containsIgnoreCase("preciso de") || text.containsIgnoreCase("preciso que") || text.containsIgnoreCase("problema de") || text.containsIgnoreCase("problema na") || text.containsIgnoreCase("ajuda") || text.containsIgnoreCase("erro") || text.containsIgnoreCase("sem acesso") || text.containsIgnoreCase("abertura de chamado") || text.containsIgnoreCase("não está") || text.containsIgnoreCase("não esta") || text.containsIgnoreCase("estou precisando") || text.containsIgnoreCase("criei um chamado") || text.containsIgnoreCase("está fora") || text.containsIgnoreCase("esta fora") || text.containsIgnoreCase("poderia verificar") || text.containsIgnoreCase("não consigo") || text.containsIgnoreCase("não conseguir"))
+	{
+		if(text.contains(saudacao))
+		{
+			saudacaoIF = "entrou";
+		}
+		else
+		{
+			saudacaoIF = saudacao;
+		}
+		response.put("text","Olá " + username + saudacaoIF + ", estamos               verificando a sua solicitação");
+	}
+}
+return response;
